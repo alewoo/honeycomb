@@ -23,7 +23,7 @@ const DashboardPage = () => {
 
   return (
     <>
-      {isDashboardHome ? <DashboardHome /> : <None/>}
+      <DashboardHome />
     </>
   );
 };
