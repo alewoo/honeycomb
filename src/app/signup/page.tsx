@@ -4,9 +4,11 @@ import { useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
 import { plus_jakarta_sans_regular, plus_jakarta_sans_bold } from "../fonts";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const SignUp = () => {
   const { theme } = useTheme();
+  const router = useRouter();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -23,10 +25,27 @@ const SignUp = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log(formData);
+    console.log("Form submitted", formData);
+    try {
+      const response = await fetch("/api/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        // Redirect to home page or login page on successful signup
+        router.push("/home");
+      } else {
+        const data = await response.json();
+        alert(data.error || "Signup failed");
+      }
+    } catch (error) {
+      console.error("Signup error:", error);
+      alert("An error occurred during signup");
+    }
   };
 
   return (

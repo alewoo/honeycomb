@@ -2,9 +2,11 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { plus_jakarta_sans_regular, plus_jakarta_sans_bold } from "../fonts";
 
 const HomePage = () => {
+  const router = useRouter();
   const [showRoadmapForm, setShowRoadmapForm] = useState(false);
   const [roadmapData, setRoadmapData] = useState({
     careerPath: "",
@@ -26,16 +28,15 @@ const HomePage = () => {
     e.preventDefault();
     // Here you would typically send the data to your backend
     console.log("Roadmap data submitted:", roadmapData);
-    // For now, we'll just log it and show an alert
-    alert("Roadmap creation initiated! Check the console for details.");
-    setShowRoadmapForm(false);
+    // Navigate to the roadmap page
+    router.push("/roadmap");
   };
 
   return (
     <div className={`min-h-screen bg-white ${plus_jakarta_sans_regular}`}>
       <nav className="flex items-center justify-between px-6 py-4 bg-gray-100">
         <Link
-          href="/"
+          href="/home"
           className="text-gray-800 text-2xl font-bold font-sans hover:text-[#eadaa2] transition duration-300"
         >
           honeycomb.
@@ -75,7 +76,7 @@ const HomePage = () => {
                 name="careerPath"
                 value={roadmapData.careerPath}
                 onChange={handleInputChange}
-                className="w-full px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#eadaa2]"
+                className="w-full px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#eadaa2] text-gray-800"
                 placeholder="e.g., Software Engineering, AI Research, Data Science"
                 required
               />
@@ -93,7 +94,7 @@ const HomePage = () => {
                 name="targetCompanies"
                 value={roadmapData.targetCompanies}
                 onChange={handleInputChange}
-                className="w-full px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#eadaa2]"
+                className="w-full px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#eadaa2] text-gray-800"
                 placeholder="e.g., Google, Meta, Netflix (comma-separated)"
                 required
               />
@@ -107,7 +108,7 @@ const HomePage = () => {
                 name="interests"
                 value={roadmapData.interests}
                 onChange={handleInputChange}
-                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#eadaa2]"
+                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#eadaa2] text-gray-800"
                 placeholder="e.g., AI, Machine Learning, Web Development"
                 rows={3}
                 required
