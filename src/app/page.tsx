@@ -23,23 +23,26 @@ const Home = () => {
   return (
     <>
       <div className={`min-h-screen bg-white ${plus_jakarta_sans_regular}`}>
-        <nav className="flex items-center justify-between px-6 py-4 max-w-6xl mx-auto">
-          <div className="text-center text-gray-800 text-2xl mt-10 font-bold font-sans">
+        <nav className="flex items-center justify-between px-6 py-4">
+          <Link
+            href="/"
+            className="text-gray-800 text-2xl font-bold font-sans hover:text-[#eadaa2] transition duration-300"
+          >
             honeycomb.
-          </div>
-          <div className="flex items-center mt-10 space-x-4">
-            <a
+          </Link>
+          <div className="flex items-center space-x-4">
+            <Link
               href="/login"
-              className="text-gray-700 border border-gray-700 bg-white px-4 py-2 rounded-full text-center"
+              className="text-gray-700 border border-gray-700 bg-white px-4 py-2 rounded-full text-center hover:bg-gray-100 transition duration-300"
             >
               Login
-            </a>
-            <a
+            </Link>
+            <Link
               href="/signup"
-              className="bg-[#eadaa2] text-white px-4 py-2 rounded-full text-center"
+              className="bg-[#eadaa2] text-white px-4 py-2 rounded-full text-center hover:bg-[#d8c88f] transition duration-300"
             >
               Sign Up
-            </a>
+            </Link>
           </div>
         </nav>
 

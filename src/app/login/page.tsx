@@ -22,8 +22,9 @@ const Login = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log(formData);
+    console.log("Login attempt with:", formData);
+    // Here you would typically handle the login process
+    alert("Login attempt logged. Check the console for details.");
   };
 
   return (
@@ -31,9 +32,12 @@ const Login = () => {
       className={`min-h-screen bg-white ${plus_jakarta_sans_regular} flex flex-col`}
     >
       <nav className="flex justify-start px-6 py-4">
-        <div className="text-gray-800 text-2xl font-bold font-sans">
+        <Link
+          href="/"
+          className="text-gray-800 text-2xl font-bold font-sans hover:text-[#eadaa2] transition duration-300"
+        >
           honeycomb.
-        </div>
+        </Link>
       </nav>
 
       <div className="flex-grow flex items-center justify-center">
@@ -51,7 +55,7 @@ const Login = () => {
               placeholder="Your email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#eadaa2]"
+              className="w-full px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#eadaa2] text-gray-800 placeholder-gray-400"
               required
             />
             <input
@@ -60,7 +64,7 @@ const Login = () => {
               placeholder="Your password"
               value={formData.password}
               onChange={handleChange}
-              className="w-full px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#eadaa2]"
+              className="w-full px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#eadaa2] text-gray-800 placeholder-gray-400"
               required
             />
             <button
