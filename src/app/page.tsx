@@ -23,9 +23,9 @@ const Home = () => {
   return (
     <>
       <div className={`min-h-screen bg-white ${plus_jakarta_sans_regular}`}>
-        <nav className="flex items-center justify-between px-6 py-4 max-w-6xl mx-auto">
-          <div className="text-center text-gray-800 text-2xl mt-10 font-bold font-sans">honeycomb.</div>
-          <div className="flex items-center mt-10 space-x-4">
+        <nav className="flex items-center justify-between px-6 mx-auto">
+          <div className="text-center text-gray-800 text-2xl mt-3 font-bold font-sans">honeycomb.</div>
+          <div className="flex items-center mt-5 space-x-4">
             <a href="/login" className="text-gray-700 border border-gray-700 bg-white px-4 py-2 rounded-full text-center">
               Login
             </a>
@@ -45,9 +45,9 @@ const Home = () => {
             a personalized roadmap. From projects to mentors and clubs,
             Honeycomb guides you toward landing your dream internship.
           </p>
-          <button className="mt-8 bg-[#666a86] text-white px-10 py-3 rounded-full">
+          <a href="/signup" className="mt-8 bg-[#666a86] text-white px-10 py-3 rounded-full">
             Get Started
-          </button>
+          </a>
         </header>
 
         <section className="px-4 py-16 max-w-6xl mx-auto">
