@@ -55,10 +55,7 @@ app.post('/signup', async (req, res) => {
     email,
     password: hashedPassword,
     year,
-    major,
-    skills,
-    companies,
-    careers
+    major
   });
 
   res.send('User created successfully');
