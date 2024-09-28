@@ -53,7 +53,7 @@ const Dashboard = () => {
       {/* Header Section */}
       <nav className="flex items-center justify-between px-6 py-4 bg-gray-100">
         <Link
-          href="/"
+          href="/dashboard"
           className="text-gray-800 text-2xl font-bold font-sans hover:text-[#eadaa2] transition duration-300">
           honeycomb.
         </Link>
