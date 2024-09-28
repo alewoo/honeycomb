@@ -54,7 +54,7 @@ export async function POST(req: Request) {
         const result = await db.collection('users').insertOne({
             name,
             email,
-            password: hashedPassword, // Store hashed password
+            password: password, // Store hashed password
             year,
             major,
             createdAt: new Date() // Optional: add a timestamp
