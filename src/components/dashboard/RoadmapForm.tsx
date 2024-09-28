@@ -17,6 +17,7 @@ const RoadmapForm: React.FC<RoadmapFormProps> = ({ setShowRoadmapForm }) => {
       careerPath: "",
       targetCompanies: "",
       interests: "",
+      skillLevel: "",
     });
 
     /** Handle input change in form */
@@ -98,7 +99,7 @@ const RoadmapForm: React.FC<RoadmapFormProps> = ({ setShowRoadmapForm }) => {
           <input
             id="skillLevel"
             name="skillLevel"
-            value={roadmapData.interests}
+            value={roadmapData.skillLevel}
             onChange={handleInputChange}
             className="w-full px-4 py-2 rounded-full border text-gray-800 border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#eadaa2]"
             placeholder="e.g., beginner, knowledgeable, experienced, pro"
