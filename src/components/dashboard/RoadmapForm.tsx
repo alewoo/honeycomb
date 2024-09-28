@@ -39,7 +39,7 @@ const RoadmapForm: React.FC<RoadmapFormProps> = ({ setShowRoadmapForm }) => {
       // For now, we'll just log it and show an alert
       alert("Roadmap creation initiated! Check the console for details.");
       setShowRoadmapForm(false); // Close form after submission
-    };  
+    };
 
 
     return (
@@ -55,15 +55,14 @@ const RoadmapForm: React.FC<RoadmapFormProps> = ({ setShowRoadmapForm }) => {
             name="careerPath"
             value={roadmapData.careerPath}
             onChange={handleInputChange}
-            className="w-full px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#eadaa2]"
+            className="w-full px-4 py-2 rounded-full border text-gray-800 border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#eadaa2]"
             placeholder="e.g., Software Engineering, AI Research, Data Science"
             required
           />
         </div>
         <div>
           <label
-            htmlFor="targetCompanies"
-            className="block text-gray-700 mb-2">
+            htmlFor="targetCompanies" className="block text-gray-700 mb-2">
             Which companies are you targeting?
           </label>
           <input
@@ -72,7 +71,7 @@ const RoadmapForm: React.FC<RoadmapFormProps> = ({ setShowRoadmapForm }) => {
             name="targetCompanies"
             value={roadmapData.targetCompanies}
             onChange={handleInputChange}
-            className="w-full px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#eadaa2]"
+            className="w-full px-4 py-2 rounded-full border text-gray-800 border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#eadaa2]"
             placeholder="e.g., Google, Meta, Netflix (comma-separated)"
             required
           />
@@ -86,9 +85,23 @@ const RoadmapForm: React.FC<RoadmapFormProps> = ({ setShowRoadmapForm }) => {
             name="interests"
             value={roadmapData.interests}
             onChange={handleInputChange}
-            className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#eadaa2]"
+            className="w-full px-4 py-2 rounded-lg border border-gray-300 text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#eadaa2]"
             placeholder="e.g., AI, Machine Learning, Web Development"
             rows={3}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="skillLevel" className="block text-gray-700 mb-2">
+            What is your current experience in this field?
+          </label>
+          <input
+            id="skillLevel"
+            name="skillLevel"
+            value={roadmapData.interests}
+            onChange={handleInputChange}
+            className="w-full px-4 py-2 rounded-full border text-gray-800 border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#eadaa2]"
+            placeholder="e.g., beginner, knowledgeable, experienced, pro"
             required
           />
         </div>
