@@ -2,7 +2,6 @@
 
 import React, { useState, lazy, Suspense } from 'react';
 import dynamic from 'next/dynamic';
-import { createClient } from 'utils/supabase/client'
 import Image from "next/image";
 import Images from '../../assets/images';
 import {
@@ -18,12 +17,11 @@ import {
 const DashboardHome = dynamic(() => import('@/components/dashboard/dashboardHome'), { ssr: false });
 
 const DashboardPage = () => {
-  const supabase = createClient()
   const [isDashboardHome, setIsDashboardHome] = useState(true);
 
   return (
     <>
-      <DashboardHome />
+      <DashboardHome/>
     </>
   );
 };

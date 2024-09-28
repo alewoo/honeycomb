@@ -1,100 +1,248 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Button } from "@/components/ui/button";
-import Sidebar from '@/components/dashboard/sidebar';
-import Image from "next/image";
-import Images from '../../assets/images';
-import Link from 'next/link';
-// import { useSession } from 'next-auth/react';
+import Link from "next/link";
+import { plus_jakarta_sans_regular, plus_jakarta_sans_bold } from "../fonts";
+import { format, getDaysInMonth, startOfMonth, addMonths, subMonths } from 'date-fns';
+import { useRouter } from 'next/navigation';
 
-// import { getServerSession } from "next-auth/next"
-// import { authOptions } from "../api/auth/[...nextauth]/route"
+const Dashboard = () => {
+  const router = useRouter();
 
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+  /** State to store the current date (month/year) */
+  const [currentDate, setCurrentDate] = useState(new Date());
 
-import {
-  plus_jakarta_sans_regular,
-  plus_jakarta_sans_medium,
-  plus_jakarta_sans_semibold,
-  plus_jakarta_sans_bold,
-  plus_jakarta_sans_extrabold,
-  messina_book,
-  messina_semibold
-} from '../fonts';
+  /** Function to handle previous month navigation */
+  const handlePrevMonth = () => {
+    setCurrentDate(subMonths(currentDate, 1));
+  };
 
-import { createClient } from 'utils/supabase/client'
-import { redirect } from 'next/navigation'
+  /** Function to handle next month navigation */
+  const handleNextMonth = () => {
+    setCurrentDate(addMonths(currentDate, 1));
+  };
 
-export default function DashboardLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+  /** Redirect to landing page on signout */
+  const handleSignout = () => {
+    router.push('/'); /** Replace with the landing page route */
+  };
 
-  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  /** Get details for the current month */
+  const monthName = format(currentDate, 'MMMM'); // Full month name
+  const year = format(currentDate, 'yyyy'); // Year
+  const daysInMonth = getDaysInMonth(currentDate); // Number of days in the current month
+  const firstDayOfMonth = startOfMonth(currentDate); // Get the first day of the month
+  const startDay = format(firstDayOfMonth, 'i'); // Day of the week as a number (1=Monday, 7=Sunday)
 
-  const [selectedTab, setSelectedTab] = useState('dashboard');
+  /** Create an array of days to render in the calendar */
+  const daysArray = Array.from({ length: daysInMonth }, (_, day) => day + 1);
+
+  /** State for handling the roadmap form */
+  const [showRoadmapForm, setShowRoadmapForm] = useState(false);
+  const [roadmapData, setRoadmapData] = useState({
+    careerPath: "",
+    targetCompanies: "",
+    interests: "",
+  });
+
+  /** Handle input change in form */
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setRoadmapData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  /** Handle roadmap form submission */
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Here you would typically send the data to your backend
+    console.log("Roadmap data submitted:", roadmapData);
+    // For now, we'll just log it and show an alert
+    alert("Roadmap creation initiated! Check the console for details.");
+    setShowRoadmapForm(false); // Close form after submission
+  };
 
   return (
-    <>
-      <div className="w-[1400px] h-[1000px] relative bg-white">
-        <div className="w-[1600px] h-[1200px] left-0 top-0 absolute bg-white" />
-        <div className="w-[1028px] h-[191.20px] left-[187px] top-[659px] absolute">
-          <div className="w-[401px] h-[109px] left-[312px] top-[1px] absolute">
+    <div className={`min-h-screen bg-white flex flex-col ${plus_jakarta_sans_regular}`}>
+      {/* Header Section */}
+      <nav className="flex items-center justify-between px-6 py-4 bg-gray-100">
+        <Link
+          href="/"
+          className="text-gray-800 text-2xl font-bold font-sans hover:text-[#eadaa2] transition duration-300">
+          honeycomb.
+        </Link>
+        <button className="text-gray-600 hover:text-gray-800">Logout</button>
+      </nav>
+
+      {/* Main Dashboard Section */}
+      <div className="flex flex-row w-full">
+        {/* Main Content (Dashboard and Cards) */}
+        <div className="w-3/4 p-8 border-r pt-5 border-gray-300"> {/* Vertical Divider Here */}
+          {/* Header */}
+          <div className="flex justify-between items-center">
+            <h2 className="text-5xl font-bold text-[#0d3362]">Dashboard</h2>
+            <button
+              onClick={() => setShowRoadmapForm(true)}
+              className="bg-[#EADAA2] text-gray-800 px-4 py-2 rounded-full hover:bg-[#d1b074] transition duration-300"
+            >
+              Generate New Roadmap
+            </button>
           </div>
-          <div className="w-[228px] h-[163.20px] left-[800px] top-0 absolute">
-            <div className="w-[228px] left-0 top-[135.20px] absolute text-center text-[#151438]/40 text-lg font-medium font-['DM Sans'] leading-7">Join the Right Clubs</div>
-            <img className="w-[170px] h-[110px] left-[28px] top-0 absolute rounded-[10px]" src="https://via.placeholder.com/170x110" />
-          </div>
-          <div className="w-[228px] h-[163.20px] left-[400px] top-0 absolute">
-            <div className="w-[228px] left-0 top-[135.20px] absolute text-center text-[#151438]/40 text-lg font-medium font-['DM Sans'] leading-7">Connect with Mentors</div>
-            <img className="w-[170px] h-[110px] left-[28px] top-0 absolute rounded-[10px]" src="https://via.placeholder.com/170x110" />
-          </div>
-          <div className="w-[228px] h-[191.20px] left-0 top-0 absolute">
-            <div className="w-[228px] left-0 top-[135.20px] absolute text-center text-[#151438]/40 text-lg font-medium font-['DM Sans'] leading-7">Get Real-World Experience</div>
-            <img className="w-[170px] h-[110px] left-[28px] top-0 absolute rounded-[10px]" src="https://via.placeholder.com/170x110" />
-          </div>
-        </div>
-        <div className="w-[714px] h-96 left-[344px] top-[161px] absolute">
-          <div className="w-[268px] h-[60px] left-[223px] top-[324px] absolute">
-            <div className="w-[268px] h-[60px] left-0 top-0 absolute bg-[#666a86] rounded-[100px]" />
-            <div className="left-[79px] top-[17px] absolute text-center text-white text-xl font-medium font-['DM Sans'] leading-relaxed">Get Started</div>
-          </div>
-          <div className="w-[625px] left-[44px] top-[159px] absolute text-center text-[#151438]/40 text-[22px] font-medium font-['DM Sans'] leading-loose">Create an account, answer a few questions about your goals, and get a personalized roadmap. From projects to mentors and clubs, Honeycomb guides you toward landing your dream internship.</div>
-          <div className="w-[714px] left-0 top-0 absolute text-center">
-            <span className="text-[#0d3362] text-[58px] font-bold font-['DM_Sans'] leading-[70px]">
-              design your future with
-            </span>
-            <span className="text-[#eadaa2] text-[58px] font-bold font-['DM_Sans'] leading-[70px]">
-              honeycomb.
-            </span>
-          </div>
-        </div>
-        <div className="w-[972px] h-10 left-[213px] top-[36px] absolute">
-          <div className="w-[172px] h-10 left-[800px] top-0 absolute">
-            <div className="w-[100px] h-10 left-[72px] top-0 absolute">
-              <div className="w-[100px] h-10 left-0 top-0 absolute bg-[#eadaa2] rounded-[100px]" />
-              <div className="left-[18px] top-[7px] absolute text-center text-white text-lg font-medium font-['DM Sans'] leading-relaxed">Sign Up</div>
+
+          {!showRoadmapForm ? (
+            //Dashboard card views
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-6 mt-8">
+              {/* Example Card */}
+              <div className="bg-gray-100 rounded-xl shadow-lg p-4">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center">
+                    <span className="w-8 h-8 bg-[#EADAA2] rounded-full flex items-center justify-center">A</span>
+                    <div className="ml-4">
+                      <p className="font-bold text-gray-700">Header</p>
+                      <p className="text-sm text-gray-500">Subhead</p>
+                    </div>
+                  </div>
+                  <div className="text-gray-400">•••</div>
+                </div>
+                <div className="h-48 bg-gray-300 rounded-xl flex justify-center items-center">
+                  <div className="w-20 h-20 bg-gray-400"></div>
+                </div>
+              </div>
+
+              {/* Repeat for additional cards */}
             </div>
-            <div className="left-0 top-[7px] absolute text-[#666a86] text-base font-medium font-['DM Sans'] leading-snug">Login</div>
+          ) : (
+            //New Roadmap Form
+            <form onSubmit={handleSubmit} className="max-w-lg mx-auto space-y-6 mt-14">
+              <div>
+                <label htmlFor="careerPath" className="block text-gray-700 mb-2">
+                  What career path are you interested in?
+                </label>
+                <input
+                  type="text"
+                  id="careerPath"
+                  name="careerPath"
+                  value={roadmapData.careerPath}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#eadaa2]"
+                  placeholder="e.g., Software Engineering, AI Research, Data Science"
+                  required
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="targetCompanies"
+                  className="block text-gray-700 mb-2"
+                >
+                  Which companies are you targeting?
+                </label>
+                <input
+                  type="text"
+                  id="targetCompanies"
+                  name="targetCompanies"
+                  value={roadmapData.targetCompanies}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#eadaa2]"
+                  placeholder="e.g., Google, Meta, Netflix (comma-separated)"
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="interests" className="block text-gray-700 mb-2">
+                  What are your interests or skills?
+                </label>
+                <textarea
+                  id="interests"
+                  name="interests"
+                  value={roadmapData.interests}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#eadaa2]"
+                  placeholder="e.g., AI, Machine Learning, Web Development"
+                  rows={3}
+                  required
+                />
+              </div>
+              <div className="text-center">
+                <button
+                  type="submit"
+                  className="bg-[#eadaa2] text-white px-6 py-3 rounded-full hover:bg-[#d8c88f] transition duration-300"
+                >
+                  Generate Roadmap
+                </button>
+              </div>
+            </form>
+          )}
+          {/* Dashboard Grid */}
+          
+        </div>
+
+        {/* Sidebar Right (Tasks and Calendar) */}
+        <div className="w-1/4 p-6 flex flex-col">
+          {/* Sidebar Header */}
+          <div className="flex justify-between mt-5 items-center mb-4">
+            <h3 className="text-xl text-gray-800 font-bold">Tasks</h3>
+            <button className="text-gray-500">X</button>
           </div>
-          <div className="w-[352px] h-[22px] left-[310px] top-[9px] absolute">
-            <div className="left-[290px] top-0 absolute text-[#151438]/40 text-base font-medium font-['DM Sans'] leading-snug">Support</div>
-            <div className="left-[220px] top-0 absolute text-[#151438]/40 text-base font-medium font-['DM Sans'] leading-snug">F.A.Q.</div>
-            <div className="left-[142px] top-0 absolute text-[#151438]/40 text-base font-medium font-['DM Sans'] leading-snug">About</div>
-            <div className="left-[65px] top-0 absolute text-[#151438]/40 text-base font-medium font-['DM Sans'] leading-snug">Prices</div>
-            <div className="left-0 top-0 absolute text-[#151438]/40 text-base font-medium font-['DM Sans'] leading-snug">Tour</div>
+
+          {/* Calendar Section */}
+          <div className="bg-white p-4 rounded-lg shadow mb-6">
+            <div className="flex justify-between items-center">
+              <button onClick={handlePrevMonth} className="text-[#EADAA2]">◀</button>
+              <p className="font-bold text-gray-700 mb-2">{monthName} {year}</p>
+              <button onClick={handleNextMonth} className="text-[#EADAA2]">▶</button>
+            </div>
+
+            {/* Calendar Grid */}
+            <div className="grid grid-cols-7 gap-1 text-center text-gray-700">
+              {/* Days of the week */}
+              <span className="font-bold">S</span>
+              <span className="font-bold">M</span>
+              <span className="font-bold">T</span>
+              <span className="font-bold">W</span>
+              <span className="font-bold">T</span>
+              <span className="font-bold">F</span>
+              <span className="font-bold">S</span>
+              {/* Empty slots for days before the 1st */}
+              {Array.from({ length: Number(startDay) - 1 }).map((_, index) => (
+                <span key={index}></span>
+              ))}
+              {/* Days of the month */}
+              {daysArray.map((day) => (
+                <span
+                  key={day}
+                  className={`p-2 ${
+                    day === new Date().getDate() ? 'bg-[#EADAA2] text-white rounded-full' : 'text-gray-400'
+                  }`}
+                >
+                  {day}
+                </span>
+              ))}
+            </div>
           </div>
-          <div className="w-[111px] h-[19px] left-0 top-[5px] absolute justify-center items-center inline-flex">
-            <div className="text-center text-[#333333] text-2xl font-bold font-['DM Sans']">honeycomb.</div>
+
+          {/* Task List */}
+          <div className="space-y-4">
+            <div className="flex items-center justify-between bg-white p-4 rounded-lg shadow">
+              <div className="flex items-center">
+                <span className="w-8 h-8 bg-[#EADAA2] rounded-full flex items-center justify-center">A</span>
+                <p className="ml-4 font-medium text-gray-700">List item</p>
+              </div>
+              <div className="flex items-center">
+                <span className="text-gray-500 mr-2">100+</span>
+                <input type="checkbox" className="form-checkbox text-[#EADAA2]" />
+              </div>
+            </div>
+
+            {/* Repeat for additional tasks */}
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
-}
+};
+
+export default Dashboard;
