@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Header from "../components/header";
-import Footer from "../components/footer";
 import { Badge, badgeVariants } from "@/components/ui/badge";
 import Link from "next/link";
 import {
