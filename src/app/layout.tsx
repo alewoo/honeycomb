@@ -6,8 +6,41 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "honeycomb.", // Set the title here
-  description: "Your personalized roadmap to internships.",
+  metadataBase: "https://honeycomb.tech",
+  title: {
+    default: "",
+    template: "",
+  },
+  description: "",
+  keywords: ["honeycomb", "learn", "roadmaps", "college planning", ""],
+  twitter: {
+    card: "summary_large_image",
+    site: "@honeycomb",
+    creator: "@honeycomb",
+    images: "",
+    title: {
+      default: "",
+      template: "",
+    },
+    description: "Honeycomb",
+  },
+  openGraph: {
+    url: "https://honeycomb.tech/",
+    type: "website",
+    locale: "en_US",
+    siteName: "Honeycomb",
+    title: {
+      default: "",
+      template: "",
+    },
+    description: "",
+    images: [
+      {
+        url: "",
+        alt: "",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({

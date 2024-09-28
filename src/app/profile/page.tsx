@@ -3,7 +3,6 @@
 import React, { useState, lazy, Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import dynamic from "next/dynamic";
-import { createClient } from "utils/supabase/client";
 import Image from "next/image";
 import Images from "../../assets/images/";
 import {
