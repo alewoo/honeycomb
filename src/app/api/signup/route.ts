@@ -1,27 +1,42 @@
-import { NextRequest, NextResponse } from 'next/server'; // Import types for request/response
-import clientPromise from '@/lib/mongodb'; // Ensure you're importing your MongoDB client
+import clientPromise from '@/lib/mongodb';
 
-export async function POST(req: NextRequest): Promise<NextResponse> {
-  const client = await clientPromise;
-  const db = client.db('your_db_name'); // Replace with your actual database name
+export async function POST(req: Request) {
+    const client = await clientPromise;
+    const db = client.db('Honeycomb'); // Replace with your actual database name
 
-  try {
-    // Get data from the request body
-    const { username, password } = await req.json() as { username: string; password: string };
+    try {
+        // Parse the request body
+        const body = await req.json();
+        const { name, email, password, year, major } = body;
 
-    // Check for existing user
-    const existingUser = await db.collection('users').findOne({ username });
-    if (existingUser) {
-      return NextResponse.json({ message: 'User already exists' }, { status: 409 });
+        // Log the parsed body for debugging
+        console.log('Parsed body:', body);
+
+        // Validate that name (username), email, and password exist
+        if (!name || !email || !password) {
+            console.error('Missing name, email, or password');
+            return new Response(JSON.stringify({ message: 'Name, email, and password are required' }), { status: 400 });
+        }
+
+        // Check for existing user (case-insensitive) by email
+        const existingUser = await db.collection('users').findOne({
+            email: { $regex: new RegExp(`^${email}$`, 'i') }
+        });
+
+        console.log('existingUser:', existingUser); // Log for debugging
+        if (existingUser) {
+            return new Response(JSON.stringify({ message: 'User already exists' }), { status: 409 });
+        }
+
+        // Insert the new user (log inserted data for debugging)
+        const result = await db.collection('users').insertOne({ name, email, password, year, major });
+        console.log('New user inserted:', result);
+
+        // Return a success response
+        return new Response(JSON.stringify({ message: 'User created successfully', redirectTo: '/dashboard' }), { status: 201 });
+
+    } catch (error) {
+        console.error('Error during user signup:', error);
+        return new Response(JSON.stringify({ message: 'Internal server error' }), { status: 500 });
     }
-
-    // Create a new user (ensure password hashing in production)
-    await db.collection('users').insertOne({ username, password });
-
-    // Return success response with redirect info
-    return NextResponse.json({ message: 'User created successfully', redirectTo: '/dashboard' }, { status: 201 });
-  } catch (error) {
-    console.error('Error during user signup:', error);
-    return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
-  }
 }

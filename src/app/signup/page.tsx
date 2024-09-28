@@ -38,7 +38,7 @@ const SignUp = () => {
 
       if (response.ok) {
         // Redirect to home page or login page on successful signup
-        router.push("/home");
+        router.push("/dashboard");
       } else {
         const data = await response.json();
         alert(data.error || "Signup failed");

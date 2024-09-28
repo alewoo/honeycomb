@@ -1,13 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { useTheme } from "../../context/ThemeContext";
 import { plus_jakarta_sans_regular, plus_jakarta_sans_bold } from "../fonts";
 import Link from "next/link";
 import GradientBackground from "../../components/GradientBackground";
 
 const Login = () => {
-  const { theme } = useTheme();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
