@@ -87,11 +87,7 @@ const Dashboard = () => {
         </div>
 
         {/* Sidebar Right (Tasks and Calendar) */}
-        {!isDashboardSidebar ? (
-          <></>
-        ) : (
-          <DashboardSidebar setIsDashboardSidebar={setIsDashboardSidebar}/>
-        )}
+        <DashboardSidebar/>
       </div>
     </div>
   );

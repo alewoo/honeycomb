@@ -7,11 +7,7 @@ import Image from "next/image";
 import Images from '../../assets/images';
 import { plus_jakarta_sans_regular, plus_jakarta_sans_bold } from '../../app/fonts';
 
-interface DashboardSidebarProps {
-    setIsDashboardSidebar: (show: boolean) => void;
-  }
-
-const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ setIsDashboardSidebar }) => {
+const DashboardSidebar = () => {
 
     /** State to store the current date (month/year) */
     const [currentDate, setCurrentDate] = useState(new Date());
@@ -25,10 +21,6 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ setIsDashboardSideb
 
     /** Create an array of days to render in the calendar */
     const daysArray = Array.from({ length: daysInMonth }, (_, day) => day + 1);
-
-    const handleCloseSidebar = (e: React.FormEvent) => {
-        setIsDashboardSidebar(false);
-    }
     
     return (
     <>
@@ -36,7 +28,6 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ setIsDashboardSideb
           {/* Sidebar Header */}
           <div className="flex justify-between mt-5 items-center mb-4">
             <h3 className="text-xl text-gray-800 font-bold">Tasks</h3>
-            <button onClick={handleCloseSidebar} className="text-gray-500">X</button>
           </div>
 
           {/* Calendar Section */}
