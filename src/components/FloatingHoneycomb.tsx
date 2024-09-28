@@ -1,7 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 const FloatingHoneycomb: React.FC = () => {
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+
+  useEffect(() => {
+    const updateDimensions = () => {
+      setDimensions({ width: window.innerWidth, height: window.innerHeight });
+    };
+
+    updateDimensions(); // Initial call to set dimensions
+
+    window.addEventListener("resize", updateDimensions);
+    return () => window.removeEventListener("resize", updateDimensions);
+  }, []);
+
   const honeycombs = Array(8).fill(null); // Reduced to 8 honeycomb shapes
 
   return (
@@ -14,13 +27,13 @@ const FloatingHoneycomb: React.FC = () => {
           viewBox="0 0 100 100"
           className="absolute opacity-10" // Reduced opacity
           initial={{
-            x: Math.random() * window.innerWidth,
-            y: Math.random() * window.innerHeight,
+            x: Math.random() * dimensions.width,
+            y: Math.random() * dimensions.height,
             scale: 0.8 + Math.random() * 0.4, // Smaller size range
           }}
           animate={{
-            x: Math.random() * window.innerWidth,
-            y: Math.random() * window.innerHeight,
+            x: Math.random() * dimensions.width,
+            y: Math.random() * dimensions.height,
             rotate: 360,
             scale: 0.8 + Math.random() * 0.4,
           }}

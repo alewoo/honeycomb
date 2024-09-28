@@ -13,39 +13,11 @@ const Dashboard = () => {
   const DashboardGrid = dynamic(() => import('@/components/dashboard/dashboardGrid'), { ssr: false });
 
   /** States for handling the roadmap form and pages */
-  const [isDashboardSidebar, setIsDashboardSidebar] = useState(true);
   const [showRoadmapForm, setShowRoadmapForm] = useState(false);
-  const [roadmapData, setRoadmapData] = useState({
-    careerPath: "",
-    targetCompanies: "",
-    interests: "",
-  });
 
   /** Redirect to landing page on signout */
   const handleSignout = () => {
     router.push('/'); /** Replace with the landing page route */
-  };
-
-  /** Handle input change in form */
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setRoadmapData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
-  /** Handle roadmap form submission */
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Here you would typically send the data to your backend
-    console.log("Roadmap data submitted:", roadmapData);
-    
-    // For now, we'll just log it and show an alert
-    alert("Roadmap creation initiated! Check the console for details.");
-    setShowRoadmapForm(false); // Close form after submission
   };
 
   return (
