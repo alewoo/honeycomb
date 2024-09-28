@@ -13,6 +13,7 @@ import {
   plus_jakarta_sans_extrabold,
   messina_book,
 } from "./fonts";
+import DashedDivider from "../components/dashedDivider";
 import { useTheme } from "../context/ThemeContext";
 import { motion } from "framer-motion"; // Add this import
 import FloatingHoneycomb from "../components/FloatingHoneycomb";

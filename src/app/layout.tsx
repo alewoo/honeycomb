@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
   metadataBase: "https://honeycomb.tech",
   title: {
-    default: "Honeycomb.ai",
+    default: "",
     template: "",
   },
   description: "",
