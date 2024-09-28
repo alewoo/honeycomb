@@ -22,13 +22,28 @@ const HomePage = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically send the data to your backend
     console.log("Roadmap data submitted:", roadmapData);
-    // For now, we'll just log it and show an alert
-    alert("Roadmap creation initiated! Check the console for details.");
-    setShowRoadmapForm(false);
+  
+    // Send the data to your backend API
+    const response = await fetch('/api/roadmap', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: "test16@gmail.com",  // Include the user's email if needed
+        ...roadmapData,
+      }),
+    });
+  
+    if (response.ok) {
+      alert("Roadmap created successfully!");
+      setShowRoadmapForm(false);
+    } else {
+      alert("Failed to create roadmap. Please try again.");
+    }
   };
 
   return (
