@@ -1,11 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation"; // Import useRouter
+import { useTheme } from "../../context/ThemeContext";
 import { plus_jakarta_sans_regular, plus_jakarta_sans_bold } from "../fonts";
 import Link from "next/link";
 import GradientBackground from "../../components/GradientBackground";
 
 const Login = () => {
+  const { theme } = useTheme();
+  const router = useRouter(); // Initialize useRouter
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -19,11 +23,27 @@ const Login = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Login attempt with:", formData);
-    // Here you would typically handle the login process
-    alert("Login attempt logged. Check the console for details.");
+
+    // Sending the login request to your API
+    const response = await fetch('/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData), // Ensure the form data is sent as JSON
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      alert("Login successful!"); // Handle success
+      console.log(data);
+      router.push(data.redirectTo); // Use redirectTo from response to navigate
+    } else {
+      alert(data.message); // Handle error
+    }
   };
 
   return (
