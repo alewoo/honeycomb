@@ -75,7 +75,7 @@ const Dashboard = () => {
           className="text-gray-800 text-2xl font-bold font-sans hover:text-[#eadaa2] transition duration-300">
           honeycomb.
         </Link>
-        <button className="text-gray-600 hover:text-gray-800">Logout</button>
+        <a href="/" className="text-gray-600 hover:text-gray-800">Logout</a>
       </nav>
 
       {/* Main Dashboard Section */}
@@ -166,18 +166,25 @@ const Dashboard = () => {
                   required
                 />
               </div>
-              <div className="text-center">
+
+              <div className="flex justify-center space-x-4">
                 <button
                   type="submit"
                   className="bg-[#eadaa2] text-white px-6 py-3 rounded-full hover:bg-[#d8c88f] transition duration-300"
                 >
                   Generate Roadmap
                 </button>
+
+                {/* Exit Button */}
+                <button
+                  type="button"
+                  onClick={() => setShowRoadmapForm(false)}
+                  className="text-gray-800 px-6 py-3 hover:text-red-400 transition duration-300">
+                  Exit
+                </button>
               </div>
             </form>
           )}
-          {/* Dashboard Grid */}
-          
         </div>
 
         {/* Sidebar Right (Tasks and Calendar) */}
