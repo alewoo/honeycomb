@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { plus_jakarta_sans_regular, plus_jakarta_sans_bold } from "../fonts";
+import GradientBackground from "../../components/GradientBackground";
 
 interface RoadmapItem {
   title: string;
@@ -110,47 +111,57 @@ const RoadmapPage = () => {
   );
 
   return (
-    <div className={`min-h-screen bg-gray-100 ${plus_jakarta_sans_regular}`}>
-      <nav className="flex items-center justify-between px-6 py-4 bg-white shadow-md">
-        <Link
-          href="/home"
-          className="text-gray-800 text-2xl font-bold font-sans hover:text-[#eadaa2] transition duration-300"
-        >
-          honeycomb.
-        </Link>
-        <button className="text-gray-600 hover:text-gray-800">Logout</button>
-      </nav>
+    <GradientBackground>
+      <div className={`min-h-screen ${plus_jakarta_sans_regular}`}>
+        <nav className="flex items-center justify-between px-6 py-4 bg-white shadow-md">
+          <Link
+            href="/home"
+            className="text-gray-800 text-2xl font-bold font-sans hover:text-[#eadaa2] transition duration-300"
+          >
+            honeycomb.
+          </Link>
+          <button className="text-gray-600 hover:text-gray-800">Logout</button>
+        </nav>
 
-      <main className="container mx-auto px-4 py-8">
-        <h1
-          className={`text-4xl ${plus_jakarta_sans_bold} text-center text-[#0d3362] mb-8`}
-        >
-          Your Personalized Roadmap
-        </h1>
+        <main className="container mx-auto px-4 py-8">
+          <h1
+            className={`text-4xl ${plus_jakarta_sans_bold} text-center text-[#0d3362] mb-8`}
+          >
+            Your Personalized Roadmap
+          </h1>
 
-        {loading ? (
-          <div className="text-center">
-            <p className="text-xl text-gray-600">Generating your roadmap...</p>
-          </div>
-        ) : roadmap ? (
-          <>
-            <RoadmapSection
-              title="Recommended Projects"
-              items={roadmap.projects}
-            />
-            <RoadmapSection title="Potential Mentors" items={roadmap.mentors} />
-            <RoadmapSection title="Relevant Clubs" items={roadmap.clubs} />
-            <RoadmapSection title="Suggested Courses" items={roadmap.courses} />
-          </>
-        ) : (
-          <div className="text-center">
-            <p className="text-xl text-gray-600">
-              Failed to generate roadmap. Please try again.
-            </p>
-          </div>
-        )}
-      </main>
-    </div>
+          {loading ? (
+            <div className="text-center">
+              <p className="text-xl text-gray-600">
+                Generating your roadmap...
+              </p>
+            </div>
+          ) : roadmap ? (
+            <>
+              <RoadmapSection
+                title="Recommended Projects"
+                items={roadmap.projects}
+              />
+              <RoadmapSection
+                title="Potential Mentors"
+                items={roadmap.mentors}
+              />
+              <RoadmapSection title="Relevant Clubs" items={roadmap.clubs} />
+              <RoadmapSection
+                title="Suggested Courses"
+                items={roadmap.courses}
+              />
+            </>
+          ) : (
+            <div className="text-center">
+              <p className="text-xl text-gray-600">
+                Failed to generate roadmap. Please try again.
+              </p>
+            </div>
+          )}
+        </main>
+      </div>
+    </GradientBackground>
   );
 };
 

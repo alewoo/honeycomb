@@ -15,13 +15,25 @@ import {
 } from "./fonts";
 import DashedDivider from "../components/dashedDivider";
 import { useTheme } from "../context/ThemeContext";
+import { motion } from "framer-motion"; // Add this import
+import FloatingHoneycomb from "../components/FloatingHoneycomb";
+import AnimatedIcon from "../components/AnimatedIcon";
 
 const Home = () => {
   const { theme } = useTheme();
 
+  // Add this animation variant
+  const letterVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
+  };
+
   return (
     <>
-      <div className={`min-h-screen bg-white ${plus_jakarta_sans_regular}`}>
+      <div
+        className={`min-h-screen bg-gradient-to-br from-white via-[#f5f0e0] to-[#eadaa2] ${plus_jakarta_sans_regular} relative overflow-hidden`}
+      >
+        <FloatingHoneycomb />
         <nav className="flex items-center justify-between px-6 py-4">
           <Link
             href="/"
@@ -47,11 +59,27 @@ const Home = () => {
 
         <header className="flex flex-col items-center text-center px-4 py-10 max-w-6xl mx-auto">
           <h1 className="text-[#0d3362] text-[58px] font-bold leading-tight">
-            design your future with
+            {/* Replace the static text with animated letters */}
+            {"design your future with".split("").map((char, index) => (
+              <motion.span
+                key={index}
+                variants={letterVariants}
+                initial="hidden"
+                animate="visible"
+                transition={{ delay: index * 0.05 }}
+              >
+                {char}
+              </motion.span>
+            ))}
           </h1>
-          <span className="text-[#eadaa2] text-[58px] font-bold">
+          <motion.span
+            className="text-[#eadaa2] text-[58px] font-bold"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.5, duration: 0.5 }}
+          >
             honeycomb.
-          </span>
+          </motion.span>
           <p className="mt-6 text-lg md:text-2xl text-gray-600 max-w-2xl">
             Create an account, answer a few questions about your goals, and get
             a personalized roadmap. From projects to mentors and clubs,
@@ -65,40 +93,41 @@ const Home = () => {
           </Link>
         </header>
 
-        <section className="px-4 py-16 max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="flex flex-col items-center">
-              <img
-                className="w-40 h-28 rounded-lg"
-                src="https://via.placeholder.com/170x110"
-                alt="Experience"
-              />
-              <p className="mt-4 text-center text-gray-600 font-medium">
-                Get Real-World Experience
-              </p>
-            </div>
-            <div className="flex flex-col items-center">
-              <img
-                className="w-40 h-28 rounded-lg"
-                src="https://via.placeholder.com/170x110"
-                alt="Mentors"
-              />
-              <p className="mt-4 text-center text-gray-600 font-medium">
-                Connect with Mentors
-              </p>
-            </div>
-            <div className="flex flex-col items-center">
-              <img
-                className="w-40 h-28 rounded-lg"
-                src="https://via.placeholder.com/170x110"
-                alt="Clubs"
-              />
-              <p className="mt-4 text-center text-gray-600 font-medium">
-                Join the Right Clubs
-              </p>
-            </div>
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-8 px-4 py-12 max-w-6xl mx-auto">
+          <div className="flex flex-col items-center text-center">
+            <AnimatedIcon
+              path="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"
+              viewBox="0 0 24 24"
+            />
+            <h3 className="text-xl font-semibold mt-4 mb-2">Experience</h3>
+            <p className="text-gray-600">
+              Gain real-world skills through hands-on projects and internships.
+            </p>
+          </div>
+          <div className="flex flex-col items-center text-center">
+            <AnimatedIcon
+              path="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zm10 0a3 3 0 100-6 3 3 0 000 6zm0 2a5 5 0 014.546 2.914A5.986 5.986 0 0122 21v-2a4 4 0 00-4-4h-1z"
+              viewBox="0 0 24 24"
+            />
+            <h3 className="text-xl font-semibold mt-4 mb-2">Mentors</h3>
+            <p className="text-gray-600">
+              Learn from industry experts who guide your professional growth.
+            </p>
+          </div>
+          <div className="flex flex-col items-center text-center">
+            <AnimatedIcon
+              path="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+              viewBox="0 0 24 24"
+            />
+            <h3 className="text-xl font-semibold mt-4 mb-2">Clubs</h3>
+            <p className="text-gray-600">
+              Join diverse communities to explore interests and build
+              connections.
+            </p>
           </div>
         </section>
+
+        {/* ... rest of the component remains unchanged ... */}
       </div>
     </>
   );
