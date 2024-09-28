@@ -1,12 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation"; // Import useRouter
 import { useTheme } from "../../context/ThemeContext";
 import { plus_jakarta_sans_regular, plus_jakarta_sans_bold } from "../fonts";
 import Link from "next/link";
 
 const Login = () => {
   const { theme } = useTheme();
+  const router = useRouter(); // Initialize useRouter
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -20,31 +22,40 @@ const Login = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Login attempt with:", formData);
-    // Here you would typically handle the login process
-    alert("Login attempt logged. Check the console for details.");
+
+    // Sending the login request to your API
+    const response = await fetch('/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData), // Ensure the form data is sent as JSON
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      alert("Login successful!"); // Handle success
+      console.log(data);
+      router.push(data.redirectTo); // Use redirectTo from response to navigate
+    } else {
+      alert(data.message); // Handle error
+    }
   };
 
   return (
-    <div
-      className={`min-h-screen bg-white ${plus_jakarta_sans_regular} flex flex-col`}
-    >
+    <div className={`min-h-screen bg-white ${plus_jakarta_sans_regular} flex flex-col`}>
       <nav className="flex justify-start px-6 py-4">
-        <Link
-          href="/"
-          className="text-gray-800 text-2xl font-bold font-sans hover:text-[#eadaa2] transition duration-300"
-        >
+        <Link href="/" className="text-gray-800 text-2xl font-bold font-sans hover:text-[#eadaa2] transition duration-300">
           honeycomb.
         </Link>
       </nav>
 
       <div className="flex-grow flex items-center justify-center">
         <div className="max-w-md w-full px-6">
-          <h1
-            className={`text-[#0d3362] text-4xl ${plus_jakarta_sans_bold} text-center mb-8 font-bold`}
-          >
+          <h1 className={`text-[#0d3362] text-4xl ${plus_jakarta_sans_bold} text-center mb-8 font-bold`}>
             Sign In
           </h1>
 
