@@ -23,15 +23,26 @@ const Home = () => {
   return (
     <>
       <div className={`min-h-screen bg-white ${plus_jakarta_sans_regular}`}>
-        <nav className="flex items-center justify-between px-6 mx-auto">
-          <div className="text-center text-gray-800 text-2xl mt-3 font-bold font-sans">honeycomb.</div>
-          <div className="flex items-center mt-5 space-x-4">
-            <a href="/login" className="text-gray-700 border border-gray-700 bg-white px-4 py-2 rounded-full text-center">
+        <nav className="flex items-center justify-between px-6 py-4">
+          <Link
+            href="/"
+            className="text-gray-800 text-2xl font-bold font-sans hover:text-[#eadaa2] transition duration-300"
+          >
+            honeycomb.
+          </Link>
+          <div className="flex items-center space-x-4">
+            <Link
+              href="/login"
+              className="text-gray-700 border border-gray-700 bg-white px-4 py-2 rounded-full text-center hover:bg-gray-100 transition duration-300"
+            >
               Login
-            </a>
-            <a href="/signup" className="bg-[#eadaa2] text-white px-4 py-2 rounded-full text-center">
+            </Link>
+            <Link
+              href="/signup"
+              className="bg-[#eadaa2] text-white px-4 py-2 rounded-full text-center hover:bg-[#d8c88f] transition duration-300"
+            >
               Sign Up
-            </a>
+            </Link>
           </div>
         </nav>
 
@@ -39,15 +50,20 @@ const Home = () => {
           <h1 className="text-[#0d3362] text-[58px] font-bold leading-tight">
             design your future with
           </h1>
-          <span className="text-[#eadaa2] text-[58px] font-bold">honeycomb.</span>
+          <span className="text-[#eadaa2] text-[58px] font-bold">
+            honeycomb.
+          </span>
           <p className="mt-6 text-lg md:text-2xl text-gray-600 max-w-2xl">
             Create an account, answer a few questions about your goals, and get
             a personalized roadmap. From projects to mentors and clubs,
             Honeycomb guides you toward landing your dream internship.
           </p>
-          <a href="/signup" className="mt-8 bg-[#666a86] text-white px-10 py-3 rounded-full">
+          <Link
+            href="/signup"
+            className="mt-8 bg-[#666a86] text-white px-10 py-3 rounded-full hover:bg-[#555872] transition duration-300"
+          >
             Get Started
-          </a>
+          </Link>
         </header>
 
         <section className="px-4 py-16 max-w-6xl mx-auto">
