@@ -24,30 +24,43 @@ const Home = () => {
     <>
       <div className={`min-h-screen bg-white ${plus_jakarta_sans_regular}`}>
         <nav className="flex items-center justify-between px-6 py-4 max-w-6xl mx-auto">
-        <div className="text-center text-gray-800 text-2xl mt-10 font-bold font-sans">honeycomb.</div>
-        <div className="flex items-center mt-10 space-x-4">
-          <a href="/login" className="text-gray-700 border border-gray-700 bg-white px-4 py-2 rounded-full text-center">
-            Login
-          </a>
-          <a href="/signup" className="bg-[#eadaa2] text-white px-4 py-2 rounded-full text-center">
-            Sign Up
-          </a>
-        </div>
-      </nav>
+          <div className="text-center text-gray-800 text-2xl mt-10 font-bold font-sans">
+            honeycomb.
+          </div>
+          <div className="flex items-center mt-10 space-x-4">
+            <a
+              href="/login"
+              className="text-gray-700 border border-gray-700 bg-white px-4 py-2 rounded-full text-center"
+            >
+              Login
+            </a>
+            <a
+              href="/signup"
+              className="bg-[#eadaa2] text-white px-4 py-2 rounded-full text-center"
+            >
+              Sign Up
+            </a>
+          </div>
+        </nav>
 
         <header className="flex flex-col items-center text-center px-4 py-10 max-w-6xl mx-auto">
           <h1 className="text-[#0d3362] text-[58px] font-bold leading-tight">
             design your future with
           </h1>
-          <span className="text-[#eadaa2] text-[58px] font-bold">honeycomb.</span>
+          <span className="text-[#eadaa2] text-[58px] font-bold">
+            honeycomb.
+          </span>
           <p className="mt-6 text-lg md:text-2xl text-gray-600 max-w-2xl">
             Create an account, answer a few questions about your goals, and get
             a personalized roadmap. From projects to mentors and clubs,
             Honeycomb guides you toward landing your dream internship.
           </p>
-          <button className="mt-8 bg-[#666a86] text-white px-10 py-3 rounded-full">
+          <Link
+            href="/signup"
+            className="mt-8 bg-[#666a86] text-white px-10 py-3 rounded-full hover:bg-[#555872] transition duration-300"
+          >
             Get Started
-          </button>
+          </Link>
         </header>
 
         <section className="px-4 py-16 max-w-6xl mx-auto">
