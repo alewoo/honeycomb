@@ -6,14 +6,7 @@ import Image from "next/image";
 import Header from "../components/header";
 import { Badge, badgeVariants } from "@/components/ui/badge";
 import Link from "next/link";
-import {
-  plus_jakarta_sans_regular,
-  plus_jakarta_sans_medium,
-  plus_jakarta_sans_semibold,
-  plus_jakarta_sans_bold,
-  plus_jakarta_sans_extrabold,
-  messina_book,
-} from "./fonts";
+import { plus_jakarta_sans_regular, plus_jakarta_sans_bold } from "./fonts";
 import { useTheme } from "../context/ThemeContext";
 import { motion, AnimatePresence } from "framer-motion"; // Add this import
 import FloatingHoneycomb from "../components/FloatingHoneycomb";
@@ -50,7 +43,7 @@ const Home = () => {
     visible: { opacity: 1 },
   };
 
-  const BenefitCard = ({ icon, title, description }) => (
+  const BenefitCard = ({ icon, title, description }: { icon: React.ReactNode, title: string, description: string }) => (
     <div className="bg-[#f7f3e3] p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center text-center">
       <div className="text-[#0d3362] mb-4">{icon}</div>
       <h3 className="text-xl font-semibold mb-3 text-[#0d3362]">{title}</h3>
