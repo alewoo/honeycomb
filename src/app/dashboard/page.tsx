@@ -1,10 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import dynamic from "next/dynamic";
-import jwt from "jsonwebtoken"; // Import for decoding JWT
-import Cookies from "js-cookie"; // Import for handling cookies
-import Image from "next/image";
+import jwt from "jsonwebtoken";
+import Cookies from "js-cookie";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import RoadmapForm from "@/components/dashboard/RoadmapForm";
@@ -14,7 +12,7 @@ const DashboardPage = () => {
 
   const [userData, setUserData] = useState<{
     email: string;
-    userId: string;
+    _id: string;  // Use _id instead of userId
     name: string;
     year: string;
     major: string;
@@ -44,6 +42,7 @@ const DashboardPage = () => {
               const data = await response.json();
               Cookies.set("user_data", JSON.stringify(data), { expires: 1 });
               setUserData(data);
+              console.log("userData: " + JSON.stringify(data, null, 2));
             } else {
               router.push("/login");
             }
@@ -64,7 +63,7 @@ const DashboardPage = () => {
     console.log("Roadmap form data submitted:", formData);
   
     try {
-      // Call the API route
+      // Call the API route to generate the roadmap
       const response = await fetch("/api/generate-roadmap", {
         method: "POST",
         headers: {
@@ -75,15 +74,46 @@ const DashboardPage = () => {
   
       if (response.ok) {
         const roadmap = await response.json();
-        console.log("Roadmap: " + roadmap);
+        console.log("Generated Roadmap: ", JSON.stringify(roadmap, null, 2));
   
-        // Store the generated roadmap in cookies
-        Cookies.set("roadmap_data", JSON.stringify(roadmap), { expires: 1 });
-        
-        // Redirect to the roadmap page
-        router.push("/roadmap");
+        // Validate that roadmap contains expected arrays
+        if (!roadmap.projects || !roadmap.clubs || !roadmap.classes) {
+          throw new Error("Incomplete roadmap data");
+        }
+  
+        // Save the roadmap to the user's profile in MongoDB
+        const updateResponse = await fetch("/api/user/update", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId: userData?._id,
+            newInfo: {
+              roadmap: {
+                projects: roadmap.projects, // Array of projects
+                clubs: roadmap.clubs, // Array of clubs
+                classes: roadmap.classes, // Array of classes
+              },
+            },
+          }),
+        });
+  
+        if (updateResponse.ok) {
+          console.log("Roadmap saved to user profile");
+  
+          // Store the generated roadmap in cookies (optional)
+          Cookies.set("roadmap_data", JSON.stringify(roadmap), { expires: 1 });
+  
+          // Redirect to the roadmap page
+          router.push("/roadmap");
+        } else {
+          const errorData = await updateResponse.json();
+          console.error("Error updating user roadmap:", errorData);
+        }
       } else {
-        console.error("Error generating roadmap:", await response.json());
+        const errorData = await response.json();
+        console.error("Error generating roadmap:", errorData);
       }
     } catch (error) {
       console.error("Unexpected error during roadmap generation:", error);
@@ -134,8 +164,9 @@ const DashboardPage = () => {
             {/* Sign Out Button */}
             <li className="hover:bg-[#d8c88f] rounded p-2">
               <button
-                onClick={handleSignout} // Ensure you have the handleSignout function
-                className="w-full text-left text-[#0d3362]">
+                onClick={handleSignout}
+                className="w-full text-left text-[#0d3362]"
+              >
                 Sign Out
               </button>
             </li>
@@ -151,13 +182,6 @@ const DashboardPage = () => {
           </div>
           <div className="flex items-center space-x-4">
             <input type="text" placeholder="Search" className="border rounded p-2" />
-            {/* <Image
-              src="/avatar-placeholder.png"
-              alt="User Avatar"
-              width={40}
-              height={40}
-              className="rounded-full"
-            /> */}
           </div>
         </header>
 
@@ -189,8 +213,7 @@ const DashboardPage = () => {
           <RoadmapForm
             setShowRoadmapForm={setShowRoadmapForm}
             generateRoadmap={handleGenerateRoadmap} // Pass handleGenerateRoadmap to RoadmapForm
-            userData={userData ? { year: userData.year, major: userData.major } : { year: '', major: '' }}
-          />
+            userData={userData ? { year: userData.year, major: userData.major } : { year: '', major: '' }}          />
         )}
       </main>
     </div>

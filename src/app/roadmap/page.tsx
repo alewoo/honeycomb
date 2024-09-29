@@ -113,7 +113,7 @@ const RoadmapPage = () => {
     <div className={`min-h-screen bg-gray-100 ${plus_jakarta_sans_regular}`}>
       <nav className="flex items-center justify-between px-6 py-4 bg-white shadow-md">
         <Link
-          href="/home"
+          href="/dashboard"
           className="text-gray-800 text-2xl font-bold font-sans hover:text-[#eadaa2] transition duration-300"
         >
           honeycomb.
