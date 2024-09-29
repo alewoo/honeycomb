@@ -28,13 +28,16 @@ const {
     year = "freshman"
     companies = ["Tesla", "john deere"]
     companies = companies.join(", ")
-    roles = ["CAD", 'mechanics']
+    roles = ["CAD engineer", 'mechanics']
     roles = roles.join(", ")
     level = "intermediate"
+    skills = "cad"
 
     const userInput = `I am a ${major} ${year} who wants to apply for ${roles} internships in the future.
 
     The desired roles are ${roles}.
+
+    Some of the skills I hope to develop are ${skills}
     
     Based on my above goals, generate a list of 4 ${level}, fun, non-generic projects I should perform to feel internship-ready and gain the required skills.
     
