@@ -12,7 +12,7 @@ const DashboardPage = () => {
 
   const [userData, setUserData] = useState<{
     email: string;
-    _id: string; // Use _id instead of userId
+    _id: string;  // Use _id instead of userId
     name: string;
     year: string;
     major: string;
@@ -25,10 +25,7 @@ const DashboardPage = () => {
 
     if (token) {
       try {
-        const decodedUser = jwt.decode(token) as {
-          email: string;
-          userId: string;
-        };
+        const decodedUser = jwt.decode(token) as { email: string; userId: string };
 
         const userDataCookie = Cookies.get("user_data");
         if (userDataCookie) {
@@ -64,7 +61,7 @@ const DashboardPage = () => {
   // Function to generate a roadmap by calling the API (projects-prompt.js)
   const handleGenerateRoadmap = async (formData: any) => {
     console.log("Roadmap form data submitted:", formData);
-
+  
     try {
       // Call the API route to generate the roadmap
       const response = await fetch("/api/generate-roadmap", {
@@ -74,46 +71,32 @@ const DashboardPage = () => {
         },
         body: JSON.stringify(formData),
       });
-
+  
       if (response.ok) {
         const roadmap = await response.json();
         console.log("Generated Roadmap: ", JSON.stringify(roadmap, null, 2));
-
+  
         // Validate that roadmap contains expected arrays
         if (!roadmap.projects || !roadmap.clubs || !roadmap.classes) {
           throw new Error("Incomplete roadmap data");
         }
 
-        // Set the roadmap data cookie once, with stringified data
-        Cookies.set("roadmap_data", roadmap, { expires: 1 });
-
-        // Log the cookie after setting it
-        console.log("Cookies: ", Cookies.get("roadmap_data"));
-
-        // Save the roadmap to the user's profile in MongoDB
-        // const updateResponse = await fetch("/api/user/update", {
-        //   method: "POST",
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //   },
-        //   body: JSON.stringify({
-        //     userId: userData?._id,
-        //     newInfo: {
-        //       roadmap: {
-        //         projects: roadmap.projects, // Array of projects
-        //         clubs: roadmap.clubs, // Array of clubs
-        //         classes: roadmap.classes, // Array of classes
-        //       },
-        //     },
-        //   }),
-        // });
-
+        await Cookies.set("roadmap_data", JSON.stringify(roadmap), { expires: 1 });
+        console.log(Cookies.get("roadmap_data"));
+  
+        // if (updateResponse.ok) {
         if (roadmap) {
           console.log("Roadmap saved to user profile");
-
+  
+          // Store the generated roadmap in cookies (optional)
+          Cookies.set("roadmap_data", JSON.stringify(roadmap), { expires: 1 });
+          localStorage.setItem("roadmap_data", JSON.stringify(roadmap));
+          console.log("Roadmap saved to localStorage: " + localStorage.getItem("roadmap_data"));
+  
           // Redirect to the roadmap page
           router.push("/roadmap");
         } else {
+          // const errorData = await updateResponse.json();
           console.error("Error updating user roadmap:");
         }
       } else {
@@ -124,6 +107,7 @@ const DashboardPage = () => {
       console.error("Unexpected error during roadmap generation:", error);
     }
   };
+  
 
   /** Handle signout */
   const handleSignout = async () => {
@@ -185,11 +169,7 @@ const DashboardPage = () => {
             Hey, {userData?.name || "User"}
           </div>
           <div className="flex items-center space-x-4">
-            <input
-              type="text"
-              placeholder="Search"
-              className="border rounded p-2"
-            />
+            <input type="text" placeholder="Search" className="border rounded p-2" />
           </div>
         </header>
 
@@ -221,12 +201,7 @@ const DashboardPage = () => {
           <RoadmapForm
             setShowRoadmapForm={setShowRoadmapForm}
             generateRoadmap={handleGenerateRoadmap} // Pass handleGenerateRoadmap to RoadmapForm
-            userData={
-              userData
-                ? { year: userData.year, major: userData.major }
-                : { year: "", major: "" }
-            }
-          />
+            userData={userData ? { year: userData.year, major: userData.major } : { year: '', major: '' }}          />
         )}
       </main>
     </div>

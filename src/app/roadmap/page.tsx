@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Cookies from "js-cookie";
 import Link from "next/link";
 import { plus_jakarta_sans_regular, plus_jakarta_sans_bold } from "../fonts";
 
@@ -32,21 +31,21 @@ const RoadmapPage = () => {
   const [roadmap, setRoadmap] = useState<Roadmap | null>(null);
   const [loading, setLoading] = useState(true);
 
+  // Using useEffect to retrieve roadmap data from localStorage
   useEffect(() => {
-    const roadmapData = Cookies.get("roadmap_data");
+    const roadmapData = localStorage.getItem("roadmap_data");
 
     if (roadmapData) {
       try {
         const parsedRoadmap = JSON.parse(roadmapData);
         setRoadmap(parsedRoadmap);
-        setLoading(false);
       } catch (error) {
         console.error("Error parsing roadmap data:", error);
-        setLoading(false);
       }
     } else {
-      setLoading(false);
+      console.error("No roadmap found in localStorage");
     }
+    setLoading(false); // Stop loading after attempting to fetch roadmap
   }, []);
 
   const RoadmapSection = ({
