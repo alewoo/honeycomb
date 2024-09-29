@@ -24,7 +24,6 @@ const Dashboard = () => {
   const [showRoadmapForm, setShowRoadmapForm] = useState(false);
 
 
-
   // Fetch and decode user data from the cookie
   useEffect(() => {
     const token = Cookies.get('auth_token'); // Retrieve the JWT token from cookies
