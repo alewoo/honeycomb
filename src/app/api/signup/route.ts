@@ -57,7 +57,6 @@ export async function POST(req: Request) {
             password: password, // Store hashed password
             year,
             major,
-            createdAt: new Date() // Optional: add a timestamp
         });
 
         // Generate JWT token
@@ -65,7 +64,7 @@ export async function POST(req: Request) {
 
         // Set the JWT as a cookie
         const cookie = serialize('auth_token', token, {
-            httpOnly: true, // Make cookie inaccessible to JavaScript
+            httpOnly: false, // Make cookie inaccessible to JavaScript
             secure: process.env.NODE_ENV === 'production', // Use secure flag in production
             maxAge: 60 * 60 * 24, // 1 day expiration
             path: '/' // Cookie available throughout the app

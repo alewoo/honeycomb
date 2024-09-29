@@ -31,10 +31,10 @@ export async function POST(req: Request) {
             return new Response(JSON.stringify({ message: 'Invalid email or password' }), { status: 401 });
         }
 
-        // Compare the provided password with the stored plaintext password (insecure!)
+        // Compare the provided password with the stored plaintext password
         if (password !== user.password) {
             console.error('Password mismatch for user:', email);
-            return new Response(JSON.stringify({ message: 'Invalid email or password' }), { status: 401 });
+            return new Response(JSON.stringify({ message: 'Invalid email or password' }), { status: 409 });
         }
 
         // Convert MongoDB ObjectId to string for the JWT payload
@@ -45,7 +45,7 @@ export async function POST(req: Request) {
 
         // Set the JWT in an httpOnly cookie
         const cookie = serialize('auth_token', token, {
-            httpOnly: true,
+            httpOnly: false,
             secure: process.env.NODE_ENV === 'production', // Secure in production
             maxAge: 60 * 60 * 24, // 1 day expiration
             path: '/'
