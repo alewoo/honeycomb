@@ -9,6 +9,7 @@ import Cookies from 'js-cookie'; // Import for handling cookies
 
 // Fonts
 import { plus_jakarta_sans_regular, plus_jakarta_sans_bold } from "../fonts";
+import { Console } from 'console';
 
 // Components
 const RoadmapForm = dynamic(() => import('@/components/dashboard/RoadmapForm'), { ssr: false });
@@ -34,6 +35,7 @@ const Dashboard = () => {
         // Check if 'user_data' cookie exists
         const userDataCookie = Cookies.get('user_data');
         if (userDataCookie) {
+          console.log("parsing user cookie");
           // Parse the 'user_data' cookie which contains all user data in JSON format
           const userDataObject = JSON.parse(userDataCookie);
           setUserData(userDataObject); // Set the user data in state
