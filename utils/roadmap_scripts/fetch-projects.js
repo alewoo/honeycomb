@@ -21,7 +21,7 @@ const {
     responseMimeType: "text/plain",
   };
   
-  async function generateProjectRoadmap() {
+  async function fetchProjects() {
 
     // TODO: link these fields to the Form DB 
     major = "Mech E"
@@ -96,5 +96,3 @@ const {
     });
     return projects;
   }
-
-generateProjectRoadmap()

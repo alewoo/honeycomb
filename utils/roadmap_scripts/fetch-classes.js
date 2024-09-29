@@ -27,7 +27,7 @@ const generationConfig = {
   responseMimeType: "text/plain",
 };
 
-async function run() {
+async function fetchClasses() {
   const chatSession = model.startChat({
     generationConfig,
  // safetySettings: Adjust safety settings
@@ -67,4 +67,4 @@ async function run() {
       return classes;
 }
 
-run();
+fetchClasses();
