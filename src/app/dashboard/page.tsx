@@ -23,10 +23,12 @@ const Dashboard = () => {
   const [userData, setUserData] = useState<{ email: string; userId: string; name: string; careerPath: string; interests: string } | null>(null); 
   const [showRoadmapForm, setShowRoadmapForm] = useState(false);
 
+
+
   // Fetch and decode user data from the cookie
   useEffect(() => {
     const token = Cookies.get('auth_token'); // Retrieve the JWT token from cookies
-    
+
     if (token) {
       try {
         // Decode the token (just to retrieve the email/userId for now)
@@ -41,6 +43,7 @@ const Dashboard = () => {
           setUserData(userDataObject); // Set the user data in state
         } else {
           // Fetch the complete user profile from the /api/user route
+          console.log("running fetch on user data");
           const fetchUserData = async () => {
             const response = await fetch('/api/user', {
               method: 'GET',
@@ -74,6 +77,7 @@ const Dashboard = () => {
     }
   }, [router]);
 
+
   /** Handle signout */
   const handleSignout = async () => {
     try {
@@ -99,6 +103,8 @@ const Dashboard = () => {
     }
   };
 
+  
+
   return (
     <div className={`min-h-screen bg-white flex flex-col ${plus_jakarta_sans_regular}`}>
       {/* Header Section */}
@@ -111,7 +117,7 @@ const Dashboard = () => {
         <div>
           {userData && (
             <>
-              <span className="mr-4 text-gray-600 mr-10">Welcome, {userData.name} ({userData.email})</span>
+              <span className="mr-4 text-gray-600 mr-10">Welcome, {userData.name}</span>
             </>
           )}
           <button onClick={handleSignout} className="text-gray-600 hover:text-gray-800">Signout</button>
