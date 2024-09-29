@@ -68,7 +68,7 @@ const SignUp = () => {
             <h1
               className={`text-[#0d3362] text-4xl ${plus_jakarta_sans_bold} text-center mb-8 font-bold`}
             >
-              sign up now
+              Sign Up Now
             </h1>
 
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -103,7 +103,7 @@ const SignUp = () => {
                 <input
                   type="text"
                   name="year"
-                  placeholder="Year"
+                  placeholder="Year: Freshman, Sophomore, etc."
                   value={formData.year}
                   onChange={handleChange}
                   className="w-1/2 px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#eadaa2] text-gray-800 placeholder-gray-400"
@@ -111,7 +111,7 @@ const SignUp = () => {
                 <input
                   type="text"
                   name="major"
-                  placeholder="Major"
+                  placeholder="Major: Computer Science, etc."
                   value={formData.major}
                   onChange={handleChange}
                   className="w-1/2 px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#eadaa2] text-gray-800 placeholder-gray-400"
