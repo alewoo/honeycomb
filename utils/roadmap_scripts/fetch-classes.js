@@ -36,7 +36,7 @@ async function fetchClasses() {
       {
         role: "user",
         parts: [
-          {text: "You are a course recommendation system for Georgia Tech.Based on the following information about a student, recommend 5 relevant courses at Georgia Tech that align with the student's goals. Student Information:\n\nMajor: CS\nYear: freshman\nDesired Roles: SWE, ML/AI\n\nPlease provide recommendations in the following JSON format with keys \"class\", \"rationale\""},
+          {text: "You are a course recommendation system for Georgia Tech. Based on the following information about a student, recommend 5 relevant courses at Georgia Tech that align with the student's goals. Student Information:\n\nMajor: CS\nYear: freshman\nDesired Roles: SWE, ML/AI\n\nPlease provide recommendations in the following JSON format with keys \"class\", \"rationale\""},
         ],
       },
     ],

@@ -12,7 +12,13 @@ import RoadmapForm from "@/components/dashboard/RoadmapForm";
 const DashboardPage = () => {
   const router = useRouter();
 
-  const [userData, setUserData] = useState<{ email: string; userId: string; name: string; careerPath: string; interests: string } | null>(null);
+  const [userData, setUserData] = useState<{
+    email: string;
+    userId: string;
+    name: string;
+    year: string;
+    major: string;
+  } | null>(null);
   const [showRoadmapForm, setShowRoadmapForm] = useState(false);
 
   // Fetch and decode user data from the cookie
@@ -69,10 +75,11 @@ const DashboardPage = () => {
   
       if (response.ok) {
         const roadmap = await response.json();
+        console.log(roadmap);
   
         // Store the generated roadmap in cookies
         Cookies.set("roadmap_data", JSON.stringify(roadmap), { expires: 1 });
-  
+        
         // Redirect to the roadmap page
         router.push("/roadmap");
       } else {
@@ -182,6 +189,7 @@ const DashboardPage = () => {
           <RoadmapForm
             setShowRoadmapForm={setShowRoadmapForm}
             generateRoadmap={handleGenerateRoadmap} // Pass handleGenerateRoadmap to RoadmapForm
+            userData={userData ? { year: userData.year, major: userData.major } : { year: '', major: '' }}
           />
         )}
       </main>

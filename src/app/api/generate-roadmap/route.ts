@@ -5,7 +5,7 @@ import generateRoadmap from "../../../../utils/roadmap_scripts/generate-roadmap"
 export async function POST(req: Request) {
   try {
     const formData = await req.json(); // Parse the incoming data from the request
-
+    console.log("Form Data: " + formData);
     // Call the function from projects-prompt.js
     const roadmap = await generateRoadmap(formData);
 

@@ -3,11 +3,13 @@ import React, { useState } from 'react';
 interface RoadmapFormProps {
   setShowRoadmapForm: (show: boolean) => void;
   generateRoadmap: (formData: any) => void;
+  userData: { year: string; major: string }; // Add userData prop to get year and major
 }
 
 const RoadmapForm: React.FC<RoadmapFormProps> = ({
   setShowRoadmapForm,
   generateRoadmap,
+  userData,
 }) => {
   const [careerPath, setCareerPath] = useState("");
   const [targetCompanies, setTargetCompanies] = useState("");
@@ -17,8 +19,19 @@ const RoadmapForm: React.FC<RoadmapFormProps> = ({
   // Handle form submission
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Prepare formData to include all the required fields
+    const formData = {
+      year: userData.year, // From userData
+      major: userData.major, // From userData
+      roles: careerPath, // Assign careerPath to roles
+      companies: targetCompanies, // From user input
+      interests: interests, // From user input
+      level: skillLevel, // Assign skillLevel to level
+    };
+    
     // Pass all the input data to the generateRoadmap function
-    generateRoadmap({ careerPath, targetCompanies, interests, skillLevel });
+    generateRoadmap(formData);
     setShowRoadmapForm(false); // Close the form after submission
   };
 
