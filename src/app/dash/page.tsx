@@ -1,102 +1,186 @@
-import React from "react";
-import Image from "next/image";
+"use client";
+
+import React, { useState } from "react";
 import Link from "next/link";
+import { plus_jakarta_sans_regular, plus_jakarta_sans_bold } from "../fonts";
+import GradientBackground from "../../components/GradientBackground";
+import RoadmapForm from "@/components/RoadmapForm";
+
+interface RoadmapItem {
+  title: string;
+  description: string;
+  links: string[];
+}
+
+interface Roadmap {
+  projects: RoadmapItem[];
+  mentors: RoadmapItem[];
+  clubs: RoadmapItem[];
+  courses: RoadmapItem[];
+}
 
 const DashboardPage = () => {
-  // In a real application, you'd fetch this data from your backend
+  const [showRoadmapForm, setShowRoadmapForm] = useState(false);
+  const [roadmap, setRoadmap] = useState<Roadmap | null>(null);
+  const [loading, setLoading] = useState(false);
   const userName = "John"; // Replace with actual user data
 
-  return (
-    <div className="flex h-screen bg-gradient-to-b from-white to-[#f5f0e0]">
-      {/* Sidebar */}
-      <aside className="w-64 bg-[#eadaa2] text-[#0d3362] p-6">
-        <div className="text-2xl font-bold mb-10">honeycomb.</div>
-        <nav>
-          <ul className="space-y-2">
-            <li className="bg-[#d8c88f] rounded p-2">
-              <Link href="/dashboard" className="block">
-                Roadmaps
-              </Link>
-            </li>
-            <li className="hover:bg-[#d8c88f] rounded p-2">
-              <Link href="/explore" className="block">
-                Explore
-              </Link>
-            </li>
-            {/* Add more navigation items as needed */}
-          </ul>
-        </nav>
-      </aside>
+  const generateRoadmap = async (formData: any) => {
+    setLoading(true);
+    // Simulating API call to generate roadmap
+    await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulating delay
 
-      {/* Main Content */}
-      <main className="flex-1 p-10 overflow-y-auto">
-        <header className="flex justify-between items-center mb-10">
-          <div className="text-3xl font-bold text-[#0d3362]">
-            Hey, {userName}
-          </div>
-          <div className="flex items-center space-x-4">
-            <input
-              type="text"
-              placeholder="Search"
-              className="border rounded p-2"
-            />
-            <Image
-              src="/avatar-placeholder.png"
-              alt="User Avatar"
-              width={40}
-              height={40}
-              className="rounded-full"
-            />
-          </div>
-        </header>
+    setRoadmap({
+      projects: [
+        {
+          title: "Build a Personal Portfolio Website",
+          description: "Create a website to showcase your projects and skills.",
+          links: [
+            "https://www.youtube.com/watch?v=_xkSvufmjEs",
+            "https://www.freecodecamp.org/news/how-to-build-a-portfolio-website/",
+          ],
+        },
+      ],
+      mentors: [
+        {
+          title: "John Doe - Software Engineer at Google",
+          description: "GT Alumni, specializes in machine learning",
+          links: ["https://www.linkedin.com/in/johndoe"],
+        },
+      ],
+      clubs: [
+        {
+          title: "GT Web Development Club",
+          description: "Learn web development skills and work on real projects",
+          links: ["https://wdcgt.com"],
+        },
+      ],
+      courses: [
+        {
+          title: "CS 1331 - Introduction to Object-Oriented Programming",
+          description: "Fundamental course for computer science majors",
+          links: ["https://www.cc.gatech.edu/~stasko/1331/"],
+        },
+      ],
+    });
+    setLoading(false);
+    setShowRoadmapForm(false);
+  };
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-          <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-            <h2 className="text-xl font-bold mb-4 text-[#0d3362]">
-              Create a Roadmap
-            </h2>
-            <button className="bg-[#666a86] text-white px-4 py-2 rounded hover:bg-[#555872] transition duration-300">
-              Get Started
-            </button>
-          </div>
-          <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-            <h2 className="text-xl font-bold mb-4 text-[#0d3362]">
-              Continue Learning
-            </h2>
-            <button className="bg-[#666a86] text-white px-4 py-2 rounded hover:bg-[#555872] transition duration-300">
-              Resume
-            </button>
+  const RoadmapSection = ({
+    title,
+    items,
+  }: {
+    title: string;
+    items: RoadmapItem[];
+  }) => (
+    <div className="mb-8">
+      <h2 className={`text-2xl ${plus_jakarta_sans_bold} text-[#0d3362] mb-4`}>
+        {title}
+      </h2>
+      {items.map((item, index) => (
+        <div key={index} className="bg-white p-4 rounded-lg shadow-md mb-4">
+          <h3
+            className={`text-lg ${plus_jakarta_sans_bold} text-[#0d3362] mb-2`}
+          >
+            {item.title}
+          </h3>
+          <p className="text-gray-600 mb-2">{item.description}</p>
+          <div className="flex flex-wrap">
+            {item.links.map((link, linkIndex) => (
+              <a
+                key={linkIndex}
+                href={link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#eadaa2] hover:text-[#d8c88f] mr-4"
+              >
+                Resource {linkIndex + 1}
+              </a>
+            ))}
           </div>
         </div>
-
-        <section>
-          <h2 className="text-2xl font-bold mb-4 text-[#0d3362]">
-            Your Roadmaps
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {/* Placeholder for roadmap items */}
-            <div className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-              <h3 className="text-lg font-semibold mb-2 text-[#0d3362]">
-                Software Engineering
-              </h3>
-              <p className="text-gray-600">Progress: 60%</p>
-            </div>
-            <div className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-              <h3 className="text-lg font-semibold mb-2 text-[#0d3362]">
-                Data Science
-              </h3>
-              <p className="text-gray-600">Progress: 30%</p>
-            </div>
-            <div className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-              <h3 className="text-lg font-semibold mb-2 text-[#0d3362]">
-                UX Design
-              </h3>
-              <p className="text-gray-600">Progress: 45%</p>
-            </div>
-          </div>
-        </section>
-      </main>
+      ))}
     </div>
+  );
+
+  return (
+    <GradientBackground>
+      <div className={`min-h-screen ${plus_jakarta_sans_regular}`}>
+        <nav className="flex items-center justify-between px-6 py-4 bg-white shadow-md">
+          <Link
+            href="/dashboard"
+            className="text-gray-800 text-2xl font-bold font-sans hover:text-[#eadaa2] transition duration-300"
+          >
+            honeycomb.
+          </Link>
+          <button className="text-gray-600 hover:text-gray-800">Logout</button>
+        </nav>
+
+        <main className="container mx-auto px-4 py-8">
+          <h1
+            className={`text-3xl ${plus_jakarta_sans_bold} text-[#0d3362] mb-8`}
+          >
+            Hey, {userName}
+          </h1>
+
+          {!showRoadmapForm && !roadmap && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+              <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                <h2 className="text-xl font-bold mb-4 text-[#0d3362]">
+                  Create a Roadmap
+                </h2>
+                <button
+                  onClick={() => setShowRoadmapForm(true)}
+                  className="bg-[#666a86] text-white px-4 py-2 rounded hover:bg-[#555872] transition duration-300"
+                >
+                  Get Started
+                </button>
+              </div>
+              {/* Add other dashboard cards here */}
+            </div>
+          )}
+
+          {showRoadmapForm && (
+            <RoadmapForm
+              setShowRoadmapForm={setShowRoadmapForm}
+              generateRoadmap={generateRoadmap}
+            />
+          )}
+
+          {loading && (
+            <div className="text-center">
+              <p className="text-xl text-gray-600">
+                Generating your roadmap...
+              </p>
+            </div>
+          )}
+
+          {roadmap && (
+            <>
+              <h2
+                className={`text-4xl ${plus_jakarta_sans_bold} text-center text-[#0d3362] mb-8`}
+              >
+                Your Personalized Roadmap
+              </h2>
+              <RoadmapSection
+                title="Recommended Projects"
+                items={roadmap.projects}
+              />
+              <RoadmapSection
+                title="Potential Mentors"
+                items={roadmap.mentors}
+              />
+              <RoadmapSection title="Relevant Clubs" items={roadmap.clubs} />
+              <RoadmapSection
+                title="Suggested Courses"
+                items={roadmap.courses}
+              />
+            </>
+          )}
+        </main>
+      </div>
+    </GradientBackground>
   );
 };
 
