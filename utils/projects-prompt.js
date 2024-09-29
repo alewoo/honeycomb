@@ -94,6 +94,7 @@ const {
         project['roadmap'].forEach(step => console.log(step));
         console.log('\n');
     });
-
     return projects;
   }
+
+generateProjectRoadmap()
