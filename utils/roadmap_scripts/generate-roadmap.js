@@ -3,16 +3,17 @@ const fetchProjects = require('./fetch-projects');
 const fetchClubs = require('./fetch-clubs');
 const fetchClasses = require('./fetch-classes');
 
-async function generateProjects() {
+// Modify generateRoadmap to accept formData
+async function generateRoadmap(formData) {
   try {
-    // Wait for all the fetch functions to complete concurrently
+    // Wait for all the fetch functions to complete concurrently, passing formData where necessary
     const [projects, clubs, classes] = await Promise.all([
-      fetchProjects(),
-      fetchClubs(),
-      fetchClasses()
+      fetchProjects(formData),
+      fetchClubs(formData), 
+      fetchClasses(formData) 
     ]);
 
-    // Create the roadmap object
+    // Create the roadmap object using the returned data
     const roadmap = {
       projects,
       clubs,
@@ -22,10 +23,10 @@ async function generateProjects() {
     // Return the roadmap object
     return roadmap;
   } catch (error) {
-    console.error('Error generating projects:', error);
+    console.error('Error generating roadmap:', error);
     throw error;
   }
 }
 
-// Export the generateProjects function
-module.exports = generateProjects;
+// Export the generateRoadmap function
+module.exports = generateRoadmap;
