@@ -49,7 +49,7 @@ const {
     .replace(/```$/, '');        // Removes the trailing ```
 
     
-    projects = {};
+    clubs = {};
 
     try {
         clubs = JSON.parse(cleanResult);
@@ -60,6 +60,7 @@ const {
       } catch (error) {
         console.error('Invalid JSON:', error);
       }
+    return clubs
   }
 
 fetchClubs();
