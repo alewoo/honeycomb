@@ -12,6 +12,7 @@ async function generateRoadmap(formData) {
       fetchClubs(formData), 
       fetchClasses(formData) 
     ]);
+    console.log("Content succesfully generated.")
 
     // Create the roadmap object using the returned data
     const roadmap = {

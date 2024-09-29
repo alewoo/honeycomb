@@ -26,7 +26,6 @@ async function fetchClubs(formData) {
   const { major, year, roles } = formData;
 
   // Join roles into a comma-separated string for easier input
-  const rolesList = roles.join(", ");
 
   // Construct the dynamic user input based on formData
   const userInput = `
@@ -35,7 +34,7 @@ async function fetchClubs(formData) {
   Student Information:
   Major: ${major}
   Year: ${year}
-  Desired Roles: ${rolesList}
+  Desired Roles: ${roles}
 
   Please provide recommendations in the following JSON format:
   [
@@ -78,11 +77,10 @@ try {
   try {
     clubs = JSON.parse(cleanResult);
     clubs.forEach(club => {
-      console.log(`${club["name"]}: ${club["reason"]}`);
+      //console.log(`${club["name"]}: ${club["reason"]}`);
     });
   } catch (error) {
     console.error('Invalid JSON:', error);
-    throw new Error("Failed to parse AI-generated JSON");
   }
 
   // Return the parsed clubs

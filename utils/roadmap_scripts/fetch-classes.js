@@ -1,9 +1,3 @@
-/*
- * Install the Generative AI SDK
- *
- * $ npm install @google/generative-ai
- */
-
 require('dotenv').config();
 
 const {
@@ -27,44 +21,79 @@ const generationConfig = {
   responseMimeType: "text/plain",
 };
 
-async function fetchClasses() {
-  const chatSession = model.startChat({
-    generationConfig,
- // safetySettings: Adjust safety settings
- // See https://ai.google.dev/gemini-api/docs/safety-settings
-    history: [
-      {
-        role: "user",
-        parts: [
-          {text: "You are a course recommendation system for Georgia Tech. Based on the following information about a student, recommend 5 relevant courses at Georgia Tech that align with the student's goals. Student Information:\n\nMajor: CS\nYear: freshman\nDesired Roles: SWE, ML/AI\n\nPlease provide recommendations in the following JSON format with keys \"class\", \"rationale\""},
-        ],
-      },
-    ],
-  });
+async function fetchClasses(formData) {
+  // Destructure the formData to extract user-specific information
+  const { major, year, roles } = formData;
 
-  const result = await chatSession.sendMessage("INSERT_INPUT_HERE");
-  // console.log(result.response.text());
+  // Define the user input prompt, explicitly defining the structure of the JSON response
+  const userInput = `
+You are a course recommendation system for Georgia Tech. Based on the following information about a student, recommend 5 relevant courses at Georgia Tech that align with the student's goals.
 
-  jsonResult = result.response.text()
+Student Information:
+- Major: ${major}
+- Year: ${year}
+- Desired Roles: ${roles}
 
-    const cleanResult = jsonResult
-    .replace(/^```json\s*/, '')  // Removes ```json and any following whitespace/newlines
-    .replace(/```$/, '');        // Removes the trailing ```
+Please provide the recommendations in the following JSON format:
+[
+  {
+    "class": "Course Name",
+    "rationale": "A brief explanation of why this course is recommended"
+  },
+  ...
+]
 
-    
-    classes = {};
+Ensure the output is valid JSON and includes exactly 5 course recommendations.
+`;
 
+  try {
+    const chatSession = model.startChat({
+      generationConfig,
+      history: [
+        {
+          role: "user",
+          parts: [{ text: userInput }],
+        },
+      ],
+    });
+
+    // Send the user input to the model
+    const result = await chatSession.sendMessage(userInput);
+    let jsonResult = result.response.text();
+
+    // Log the full AI response for debugging purposes
+    console.log("Full AI Response:", jsonResult);
+
+    // Extract JSON content using regex to match the structure
+    const jsonMatch = jsonResult.match(/\[.*\]/s);
+
+    if (!jsonMatch) {
+      console.log("No valid JSON found in AI response:", jsonResult);
+      throw new Error("No valid JSON found in the AI response.");
+    }
+
+    const cleanOutput = jsonMatch[0]; // Extract the JSON-like content
+
+    let classes = {};
     try {
-      classes = JSON.parse(cleanResult);
-      console.log(classes)
-      // classes.forEach(class_ => {
-      //   console.log(class_["class"] + ": " + class_["rationale"]);
-      // });
-      } catch (error) {
-        console.error('Invalid JSON:', error);
-      }
+      classes = JSON.parse(cleanOutput); // Parse the cleaned JSON
+    } catch (error) {
+      console.error('Error parsing the cleaned JSON:', error);
+      throw new Error('Failed to parse cleaned JSON.');
+    }
 
-      return classes;
+    // Check if classes is an array and return it
+    if (Array.isArray(classes)) {
+      console.log("Class recommendations:", classes);
+      return classes; // Return parsed classes
+    } else {
+      console.error('Expected an array of classes but got:', classes);
+      throw new Error('Expected an array but received something else.');
+    }
+  } catch (error) {
+    console.error('Error generating classes:', error);
+    throw error;
+  }
 }
 
-fetchClasses();
+module.exports = fetchClasses;

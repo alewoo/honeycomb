@@ -65,6 +65,7 @@ const DashboardPage = () => {
   
     try {
       // Call the API route
+      console.log("Begin");
       const response = await fetch("/api/generate-roadmap", {
         method: "POST",
         headers: {
@@ -72,10 +73,11 @@ const DashboardPage = () => {
         },
         body: JSON.stringify(formData),
       });
+      console.log("Finish gen");
   
       if (response.ok) {
         const roadmap = await response.json();
-        console.log(roadmap);
+        console.log("Roadmap: " + roadmap);
   
         // Store the generated roadmap in cookies
         Cookies.set("roadmap_data", JSON.stringify(roadmap), { expires: 1 });
@@ -151,13 +153,13 @@ const DashboardPage = () => {
           </div>
           <div className="flex items-center space-x-4">
             <input type="text" placeholder="Search" className="border rounded p-2" />
-            <Image
+            {/* <Image
               src="/avatar-placeholder.png"
               alt="User Avatar"
               width={40}
               height={40}
               className="rounded-full"
-            />
+            /> */}
           </div>
         </header>
 
