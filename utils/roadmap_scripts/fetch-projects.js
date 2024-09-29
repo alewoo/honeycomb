@@ -28,7 +28,7 @@ const {
     year = "freshman"
     companies = ["Tesla", "john deere"]
     companies = companies.join(", ")
-    roles = ["CAD", 'mechanics']
+    roles = ["CAD engineer", 'mechanics']
     roles = roles.join(", ")
     level = "intermediate"
 
