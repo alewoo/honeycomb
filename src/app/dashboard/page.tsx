@@ -65,7 +65,6 @@ const DashboardPage = () => {
   
     try {
       // Call the API route
-      console.log("Begin");
       const response = await fetch("/api/generate-roadmap", {
         method: "POST",
         headers: {
@@ -73,7 +72,6 @@ const DashboardPage = () => {
         },
         body: JSON.stringify(formData),
       });
-      console.log("Finish gen");
   
       if (response.ok) {
         const roadmap = await response.json();
