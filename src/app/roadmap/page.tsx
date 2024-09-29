@@ -36,8 +36,14 @@ const RoadmapPage = () => {
     const roadmapData = Cookies.get("roadmap_data");
 
     if (roadmapData) {
-      setRoadmap(JSON.parse(roadmapData));
-      setLoading(false);
+      try {
+        const parsedRoadmap = JSON.parse(roadmapData);
+        setRoadmap(parsedRoadmap);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error parsing roadmap data:", error);
+        setLoading(false);
+      }
     } else {
       setLoading(false);
     }
@@ -62,9 +68,7 @@ const RoadmapPage = () => {
 
   const renderProject = (project: Project, index: number) => (
     <div key={index} className="bg-white p-4 rounded-lg shadow-md mb-4">
-      <h3
-        className={`text-lg ${plus_jakarta_sans_bold} text-[#0d3362] mb-2`}
-      >
+      <h3 className={`text-lg ${plus_jakarta_sans_bold} text-[#0d3362] mb-2`}>
         {project["project-name"]}
       </h3>
       <p className="text-gray-600 mb-2">{project.description}</p>
