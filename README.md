@@ -1,38 +1,28 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Honeycomb
 
-## Getting Started
+Honeycomb is a personalized roadmap platform designed to help students land their dream internships by curating tailored projects, mentors, clubs, and classes based on their career goals and interests. By leveraging advanced AI (Gemini) and data from Georgia Tech, Honeycomb simplifies the journey to internships for freshmen and sophomores in tech, business, and other majors.
 
-First, run the development server:
+## Features
+- **Personalized Roadmap**: Tailored suggestions for projects, mentors, clubs, and classes to help students achieve their career goals.
+- **AI-Powered Recommendations**: Gemini AI analyzes user data to provide relevant and actionable steps towards internships.
+- **Mentorship Connections**: Recommendations for alumni and industry mentors to guide students along the way.
+- **Club and Class Listings**: Georgia Tech club and course suggestions based on user preferences and career path.
+- **Secure User Authentication**: JWT-based authentication system to ensure user data privacy and security.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Tech Stack
+- **Frontend**: React.js
+- **Backend**: Node.js, Express.js
+- **Database**: MongoDB
+- **AI Service**: Gemini AI
+- **APIs**: Georgia Tech Engage (Clubs), GT Connect (Alumni/Mentors)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-
+## How It Works
+1. Users create an account and provide details about their career goals, dream companies, and interests/skills.
+2. Honeycomb uses the provided information, along with Gemini AI, to generate a personalized roadmap.
+3. The roadmap includes:
+   - Recommended projects to develop key skills.
+   - Suggested clubs and extracurriculars available at Georgia Tech.
+   - Alumni and mentors relevant to the student’s career path.
+   - Class recommendations to build relevant academic foundations.
+4. Users can track their progress and get closer to landing their dream internships.
 
