@@ -1,4 +1,4 @@
-require('dotenv').config();
+require("dotenv").config();
 
 const {
   GoogleGenerativeAI,
@@ -84,28 +84,30 @@ Return the output as **JSON** with the following structure:
     try {
       projects = JSON.parse(cleanOutput); // Parse the cleaned JSON
     } catch (error) {
-      console.error('Error parsing the cleaned JSON:', error);
-      throw new Error('Failed to parse cleaned JSON.');
+      console.error("Error parsing the cleaned JSON:", error);
+      throw new Error("Failed to parse cleaned JSON.");
     }
 
     // Check that "projects" exists and is an array
     if (projects && Array.isArray(projects.projects)) {
       projects.projects.forEach((project, index) => {
         console.log(`Project ${index + 1}:`);
-        console.log(`Name: ${project['project-name']}`);
-        console.log(`Description: ${project['description']}`);
-        console.log(`Tech Stack: ${project['tech-stack']}`);
-        console.log(`Roadmap: ${project['roadmap']}`);
-        console.log('\n');
+        console.log(`Name: ${project["project-name"]}`);
+        console.log(`Description: ${project["description"]}`);
+        console.log(`Tech Stack: ${project["tech-stack"]}`);
+        console.log(`Roadmap: ${project["roadmap"]}`);
+        console.log("\n");
       });
 
       return projects.projects; // Return parsed project array
     } else {
       console.error('Expected a "projects" array but got:', projects);
-      throw new Error('Expected a "projects" array but received something else.');
+      throw new Error(
+        'Expected a "projects" array but received something else.'
+      );
     }
   } catch (error) {
-    console.error('Error generating projects:', error);
+    console.error("Error generating projects:", error);
     throw error;
   }
 }
